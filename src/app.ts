@@ -36,11 +36,13 @@ import APIRoute from './routes/api_route';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import { jwtMiddleware } from './middlewares/jwt.middleware';
+import { IOT } from './iot';
 
 class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
+  public iot: IOT;
 
   constructor(routes: Routes[]) {
     this.app = express();
@@ -55,6 +57,12 @@ class App {
     this.initializeRoutes(routes);
     //this.initializeSwagger();
     this.initializeErrorHandling();
+    this.initializeIoT();
+  }
+
+  public initializeIoT() {
+    this.iot = new IOT();
+    this.iot.init();
   }
 
   public generateJWTKey() {
