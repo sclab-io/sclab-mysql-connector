@@ -25,12 +25,17 @@ import {
   QUERY_START,
   QUERY_END,
   QueryItems,
+  SECRET_KEY,
+  JWT_PRIVATE_KEY_PATH,
 } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
 import { QueryItem, QueryType, DBPool } from './config/index';
 import APIRoute from './routes/api_route';
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import { jwtMiddleware } from './middlewares/jwt.middleware';
 
 class App {
   public app: express.Application;
@@ -45,10 +50,23 @@ class App {
     logger.info(`=================================`);
 
     this.initializeMiddlewares();
+    this.generateJWTKey();
     this.createAPIRoutes(routes);
     this.initializeRoutes(routes);
     //this.initializeSwagger();
     this.initializeErrorHandling();
+  }
+
+  public generateJWTKey() {
+    try {
+      const token = jwt.sign({ id: SECRET_KEY }, fs.readFileSync(JWT_PRIVATE_KEY_PATH), {
+        algorithm: 'RS256',
+      });
+      logger.info(`JWT ${token}`);
+      this.app.use(jwtMiddleware);
+    } catch (e) {
+      logger.error(e);
+    }
   }
 
   public createAPIRoutes(routes: Routes[]) {
