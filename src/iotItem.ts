@@ -8,7 +8,7 @@ export class IOTItem {
     const topic: string = `${MQTT_TOPIC}${queryItem.topic}`;
     logger.info(`MQTT push query generated: ${topic}`);
 
-    setInterval(async () => {
+    const func = async () => {
       let conn: PoolConnection;
       try {
         conn = await DBPool.getConnection();
@@ -26,6 +26,10 @@ export class IOTItem {
           conn.release();
         }
       }
-    }, queryItem.interval);
+
+      setTimeout(func, queryItem.interval);
+    };
+
+    setTimeout(func, queryItem.interval);
   }
 }
