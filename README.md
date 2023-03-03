@@ -5,7 +5,7 @@ SCLAB MySQL Connector
 
 ## clone source
 ~~~bash
-git clone https://github.com/sclab-io/sclab-mysql-connector
+$ git clone https://github.com/sclab-io/sclab-mysql-connector
 ~~~
 
 ## create JWT key file for API
@@ -18,7 +18,7 @@ $ openssl rsa -in ./jwt/jwtRS256.key -pubout -outform PEM -out ./jwt/jwtRS256.ke
 
 ## create .env.production.local
 ~~~bash
-vi .env.production.local
+$ vi .env.production.local
 
 # MySQL Connection
 MYSQL_HOST=host
@@ -60,20 +60,20 @@ CREDENTIALS=true
 
 ## start
 ~~~bash
-npm run start
+$ npm run start
 
 # pm2
-npm run deploy:prod
+$ npm run deploy:prod
 
 # docker compose
-docker compose up -d
+$ docker compose up -d
 ~~~
 
 ## stop
 ~~~bash
 # pm2
-./node_modules/pm2/bin/pm2 stop 0
+$ ./node_modules/pm2/bin/pm2 stop 0
 
 # docker compose
-docker compose down
+$ docker compose down
 ~~~
