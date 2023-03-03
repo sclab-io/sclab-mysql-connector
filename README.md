@@ -29,7 +29,7 @@ MYSQL_POOL_SIZE=5
 
 # SCLAB IoT
 MQTT_TOPIC=yourtopic/
-MQTT_HOST=mqtts://seoul-1.dev-iot.sclab.io
+MQTT_HOST=yourhost
 MQTT_CLIENT_ID=your-client-id/1
 MQTT_ID=your-id
 MQTT_PASSWORD=your-password
