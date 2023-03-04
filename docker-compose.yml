@@ -11,7 +11,7 @@ services:
     restart: 'unless-stopped'
     networks:
       - backend
-  sclab-mysql-client:
+  sclab-mysql-connector:
     build:
       context: ./
       target: production-build-stage
