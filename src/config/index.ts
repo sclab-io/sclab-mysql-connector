@@ -25,8 +25,6 @@ export const {
   MQTT_CLIENT_ID,
   MQTT_ID,
   MQTT_PASSWORD,
-  QUERY_START,
-  QUERY_END,
 } = process.env;
 
 export interface QueryItem {
