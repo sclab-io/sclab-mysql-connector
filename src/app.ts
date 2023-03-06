@@ -25,6 +25,7 @@ import {
   QueryItems,
   SECRET_KEY,
   JWT_PRIVATE_KEY_PATH,
+  LOG_DIR,
 } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
@@ -92,6 +93,7 @@ class App {
   public listen() {
     this.app.listen(this.port, () => {
       logger.info(`NODE ENV: ${this.env}`);
+      logger.info(`LOG_DIR: ${LOG_DIR}`);
       logger.info(`MYSQL_HOST: ${MYSQL_HOST}`);
       logger.info(`MYSQL_USER: ${MYSQL_USER}`);
       logger.info(`MYSQL_PASSWORD: ${MYSQL_PASSWORD}`);
