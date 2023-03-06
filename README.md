@@ -46,7 +46,7 @@ MYSQL_PASSWORD=password
 MYSQL_DATABASE=databaseName
 MYSQL_POOL_SIZE=5
 
-# SCLAB IoT
+# SCLAB IoT (If you don't need to using MQTT remove this env)
 MQTT_TOPIC=yourtopic/
 MQTT_HOST=yourhost
 MQTT_CLIENT_ID=your-client-id/1
