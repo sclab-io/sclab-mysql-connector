@@ -76,6 +76,10 @@ LOG_DIR=../logs
 ORIGIN=your.domain.com
 CREDENTIALS=true
 ~~~
+## build source
+~~~bash
+$ npm run build
+~~~
 
 ## start
 ~~~bash
