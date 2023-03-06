@@ -70,13 +70,8 @@ class App {
         database: MYSQL_DATABASE,
       });
       logger.info('MySQL connection success.');
-      const rows = await conn.query('select "ok" as result');
-      if (rows[0].result === 'ok') {
-        logger.info('SQL function check complete.');
-      } else {
-        logger.info('SQL function check fail. Please check permission of your user account.');
-        process.exit();
-      }
+      const rows = await conn.query('select 1');
+      logger.info('SQL select check complete.');
       await conn.end();
     } catch (e) {
       logger.error(e);
