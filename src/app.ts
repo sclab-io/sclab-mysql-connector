@@ -7,6 +7,7 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { logger, stream } from '@utils/logger';
 import {
   NODE_ENV,
   PORT,
@@ -29,13 +30,13 @@ import {
 } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
-import { logger, stream } from '@utils/logger';
 import { QueryItem, QueryType, DBPool } from './config/index';
 import APIRoute from './routes/api_route';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import { jwtMiddleware } from './middlewares/jwt.middleware';
 import { IOT } from './iot';
+import mariadb from 'mariadb';
 
 class App {
   public app: express.Application;
@@ -49,7 +50,7 @@ class App {
     this.port = PORT || 3000;
 
     logger.info(`=================================`);
-
+    this.checkConnectionInformation();
     this.initializeMiddlewares();
     this.generateJWTKey();
     this.createAPIRoutes(routes);
@@ -57,6 +58,31 @@ class App {
     //this.initializeSwagger();
     this.initializeErrorHandling();
     this.initializeIoT();
+  }
+
+  public async checkConnectionInformation() {
+    // check connection
+    try {
+      const conn = await mariadb.createConnection({
+        host: MYSQL_HOST,
+        user: MYSQL_USER,
+        password: MYSQL_PASSWORD,
+        database: MYSQL_DATABASE,
+      });
+      logger.info('MySQL connection success.');
+      const rows = await conn.query('select "ok" as result');
+      if (rows[0].result === 'ok') {
+        logger.info('SQL function check complete.');
+      } else {
+        logger.info('SQL function check fail. Please check permission of your user account.');
+        process.exit();
+      }
+      await conn.end();
+    } catch (e) {
+      logger.error(e);
+      logger.info(`Cannot connect to MySQL. Please check your .env.${this.env}.local file.`);
+      process.exit();
+    }
   }
 
   public initializeIoT() {
@@ -94,10 +120,6 @@ class App {
     this.app.listen(this.port, () => {
       logger.info(`NODE ENV: ${this.env}`);
       logger.info(`LOG_DIR: ${LOG_DIR}`);
-      logger.info(`MYSQL_HOST: ${MYSQL_HOST}`);
-      logger.info(`MYSQL_USER: ${MYSQL_USER}`);
-      logger.info(`MYSQL_PASSWORD: ${MYSQL_PASSWORD}`);
-      logger.info(`MYSQL_DATABASE: ${MYSQL_DATABASE}`);
       logger.info(`MQTT_TOPIC: ${MQTT_TOPIC}`);
       logger.info(`MQTT_HOST: ${MQTT_HOST}`);
       logger.info(`MQTT_CLIENT_ID: ${MQTT_CLIENT_ID}`);
