@@ -24,6 +24,7 @@ export const {
   MQTT_CLIENT_ID,
   MQTT_ID,
   MQTT_PASSWORD,
+  SQL_INJECTION,
 } = process.env;
 
 export interface QueryItem {
@@ -70,7 +71,6 @@ Object.keys(process.env).forEach(function (key) {
 
 // BigInt bug fix to string
 BigInt.prototype['toJSON'] = function () {
-  console.log(Number.MAX_SAFE_INTEGER);
   if (this > Number.MAX_SAFE_INTEGER) {
     return this.toString();
   }
