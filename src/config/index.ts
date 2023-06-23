@@ -84,5 +84,5 @@ export const DBPool = mariadb.createPool({
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
   connectionLimit: parseInt(MYSQL_POOL_SIZE, 10),
-  allowPublicKeyRetrieval: MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL === 'true' || false,
+  allowPublicKeyRetrieval: MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL === 'true',
 });
