@@ -18,6 +18,7 @@ export const {
   MYSQL_PASSWORD,
   MYSQL_DATABASE,
   MYSQL_POOL_SIZE,
+  MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL,
   INTERVAL_MS,
   MQTT_TOPIC,
   MQTT_HOST,
@@ -83,4 +84,5 @@ export const DBPool = mariadb.createPool({
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
   connectionLimit: parseInt(MYSQL_POOL_SIZE, 10),
+  allowPublicKeyRetrieval: MYSQL_ALLOW_PUBLIC_KEY_RETRIEVAL === 'true' || false,
 });
