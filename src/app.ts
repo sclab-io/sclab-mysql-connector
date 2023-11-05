@@ -75,7 +75,7 @@ class App {
       logger.info('SQL select check complete.');
       await conn.end();
     } catch (e) {
-      logger.error(e);
+      console.error(e);
       logger.info(`Cannot connect to MySQL. Please check your .env.${this.env}.local file.`);
       process.exit();
     }
@@ -95,7 +95,7 @@ class App {
       logger.info(`authorization: ${token}`);
       this.app.use(jwtMiddleware);
     } catch (e) {
-      logger.error(e);
+      console.error(e);
     }
   }
 
