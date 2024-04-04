@@ -5,7 +5,7 @@ import { PoolConnection } from 'mariadb';
 
 export class IOTItem {
   init(client: mqtt.Client, queryItem: QueryItem) {
-    const topic: string = `${MQTT_TOPIC}${queryItem.topic}`;
+    const topic = `${MQTT_TOPIC}${queryItem.topic}`;
     logger.info(`MQTT push query generated: ${topic}`);
 
     const func = async () => {

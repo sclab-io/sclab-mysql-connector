@@ -31,7 +31,7 @@ import {
 } from '@config';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
-import { QueryItem, QueryType, DBPool } from './config/index';
+import { QueryItem, QueryType } from './config/index';
 import APIRoute from './routes/api_route';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
@@ -71,7 +71,7 @@ class App {
         database: MYSQL_DATABASE,
       });
       logger.info('MySQL connection success.');
-      const rows = await conn.query('select 1');
+      await conn.query('select 1');
       logger.info('SQL select check complete.');
       await conn.end();
     } catch (e) {
@@ -102,7 +102,7 @@ class App {
   public createAPIRoutes(routes: Routes[]) {
     logger.info('Create API Routes');
 
-    for (let i: number = 0; i < QueryItems.length; i++) {
+    for (let i = 0; i < QueryItems.length; i++) {
       const queryItem: QueryItem = QueryItems[i];
       if (queryItem.type === QueryType.API) {
         const route: Routes = new APIRoute(queryItem);
